@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .image-gallery {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-container {
+            display: none;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+        }
+        
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="image-gallery">
+        <div class="image-container">
+            <img src="https://steamuserimages-a.akamaihd.net/ugc/2005845300450558809/D5B7CBC12DE256998A4F2342B9FC96C494A0A548/?imw=512&amp;imh=512&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true" alt="Image 1">
+        </div>
+        <div class="image-container">
+            <img src="https://i.ytimg.com/vi/Nghkq2ZZalY/maxresdefault.jpg" alt="Image 2">
+        </div>
+        <div class="image-container">
+            <img src="https://uhd.name/uploads/posts/2022-08/1660352877_9-uhd-name-p-dagestantsi-s-chelkoi-devushka-krasivo-fot-22.jpg" alt="Image 3">
+        </div>
+        <button id="prev">Предыдущее</button>
+        <button id="next">Следующее</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let currentIndex = 0;
+            const $imageContainers = $('.image-container');
+
+            function showImage(index) {
+                $imageContainers.hide();
+                $imageContainers.eq(index).show();
+            }
+
+            $('#prev').click(function() {
+                currentIndex = (currentIndex - 1 + $imageContainers.length) % $imageContainers.length;
+                showImage(currentIndex);
+            });
+
+            $('#next').click(function() {
+                currentIndex = (currentIndex + 1) % $imageContainers.length;
+                showImage(currentIndex);
+            });
+
+            showImage(currentIndex);
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .animated-element {
+            width: 150px;
+            height: 150px;
+            background-color: rgb(131, 32, 32);
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="animated-element"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const $animatedElement = $('.animated-element');
+
+            $animatedElement.hover(function() {
+
+                $(this).css({
+                    width: '150px',
+                    height: '150px',
+                    backgroundColor: 'red'
+                });
+            }, function() {
+
+                $(this).css({
+                    width: '150px',
+                    height: '150px',
+                    backgroundColor: 'red'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .moving-element {
+            width: 150px;
+            height: 150px;
+            background-color: rgb(161, 24, 47);
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="moving-element"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const $movingElement = $('.moving-element');
+            const animationSpeed = 2000;
+
+            function moveElement() {
+                $movingElement.animate({
+                    left: '100%',
+                }, animationSpeed, 'linear', function() {
+
+                    $(this).css('left', '-50px');
+                    moveElement();
+                });
+            }
+
+            moveElement();
+        });
+    </script>
+</body>
+
+</html>
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .menu {
+            width: 250px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #333;
+            color: white;
+            transition: left 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="toggle-menu">Показать меню</button>
+    <div class="menu">
+        <ul>
+            <li><a href="#"> 1</a></li>
+            <li><a href="#"> 2</a></li>
+            <li><a href="#"> 3</a></li>
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const $menu = $('.menu');
+            const $toggleButton = $('#toggle-menu');
+            let menuVisible = false;
+
+            $toggleButton.click(function() {
+                if (menuVisible) {
+
+                    $menu.animate({
+                        left: '-250px'
+                    }, 300);
+                } else {
+
+                    $menu.animate({
+                        left: '0'
+                    }, 300);
+                }
+
+                menuVisible = !menuVisible;
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <form id="data-form">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <input type="submit" value="Отправить">
+    </form>
+
+    <div id="response-block"></div>
+
+    <script>
+        $(document).ready(function() {
+            const $dataForm = $('#data-form');
+            const $responseBlock = $('#response-block');
+
+            $dataForm.submit(function(event) {
+                event.preventDefault();
+                const formData = $dataForm.serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "ссылка-на-https://intuit.ru/studies/courses/42/42/lecture/27181.php",
+                    data: formData,
+                    success: function(response) {
+                        $responseBlock.html("Серверный ответ: " + response);
+                    },
+                    error: function() {
+                        $responseBlock.html("Произошла ошибка при отправке данных.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
